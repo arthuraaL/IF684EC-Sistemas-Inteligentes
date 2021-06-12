@@ -3,7 +3,7 @@
 class Food():
 
     def __init__(self):
-        self.position = PVector(0, 0)
+        self.position = PVector.random2D()
         self.counter = 0
         self.r = 6
 

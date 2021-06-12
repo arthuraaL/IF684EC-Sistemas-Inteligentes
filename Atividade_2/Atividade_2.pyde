@@ -6,7 +6,7 @@ def setup():
     global food
     size(640, 320)
     velocity = PVector(0, 0)
-    vehicle = Vehicle(width / 2, height / 2, True)
+    vehicle = Vehicle(width / 2, height / 2, fat=False)
     food = Food()
     
 def draw():
@@ -15,16 +15,8 @@ def draw():
     textSize(20)
     text('Food = ' + str(food.counter), 0, height-10)
     
-    mouse = PVector(mouseX, mouseY)
-    
-    # Draw an ellipse at the mouse position
-    # fill(127)
-    # stroke(200)
-    # strokeWeight(2)
-    # ellipse(mouse.x, mouse.y, 48, 48)
-    
     vehicle.arrive(food.position)
-    if vehicle.desired.mag() < 0.1:
+    if vehicle.desired.mag() < 0.5:
         food.counter += 1
         food.update(width/2, height/2)
         if vehicle.fat:
