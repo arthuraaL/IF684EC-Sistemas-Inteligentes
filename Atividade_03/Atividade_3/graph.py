@@ -28,10 +28,8 @@ class Graph:
         self.h = h
         self.f = f
         self.neighbors = []
-        self.wall = True
-    
-    def __call__(self):
-        pass
+        self.center = PVector(self.column, self.row)
+        self.path = []
     
     def add_neighbors(self, nodes):
         '''Add the neighbors of the nodes

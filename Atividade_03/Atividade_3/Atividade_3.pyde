@@ -1,9 +1,10 @@
 from collections import deque
 from graph import Graph
 from utils import BFS, make_grid
+from agent import Agent
 
 def setup():
-    global grid, cols, rows, frontier, came_from
+    global grid, cols, rows, agent, bfs
     # Initializing a queue
     frontier = deque()
     came_from = dict()
@@ -21,29 +22,27 @@ def setup():
         for j in range(cols):
             grid[i][j].add_neighbors(grid)
     
-    frontier.append(grid[0][0])
-    came_from[grid[0][0]] = None
+    start = grid[0][0]
+    bfs = BFS(start, grid)
+    agent = Agent(start.column, start.row)
     
 
 # draw == while not frontier.empty()
 def draw():
-    global rows, cols, grid, frontier, came_from        
-    goal = grid[int(random(1, cols-1))][int(random(1, rows-1))]
-    
+    global rows, cols, grid, agent, bfs
+    w = width / cols
+    h = height / rows
+    goal = grid[8][10]
     for i in range(rows):
         for j in range(cols):
             strokeWeight(1)
             grid[i][j].display(0)        
-    
-    for i in came_from:
-        strokeWeight(1)
-        i.display(0)
-    
-    for i in frontier:
-        strokeWeight(2)
-        i.display(color(0,0,150))
-    
-    
-    BFS(frontier, came_from, goal)
-
+ 
+    bfs(goal)
+    agent.display(w, h)    
+    # if b_flag:
+    #     noLoop()    
+    # agent.arrive(goal.center)
+    # agent.update()
+        
             
