@@ -20,7 +20,7 @@ class Graph:
     neighbors: list
         This is where we store the neighbors of the node
     '''
-    def __init__(self, column, row, w, h, f):
+    def __init__(self, column, row, w, h, f, terrain = 'sand'):
         self.column = column
         self.row = row
         self.w = w
@@ -29,7 +29,7 @@ class Graph:
         self.f = f
         self.neighbors = []
         # self.center = PVector(self.column, self.row)
-        self.
+        self.terrain = terrain
         self.path = []
     
     def add_neighbors(self, nodes):
@@ -51,7 +51,7 @@ class Graph:
         if self.row < rows - 1:
             self.neighbors.append(nodes[self.row + 1][self.column])
     
-    def display(self, c, is_goal=False):
+    def display(self, c, is_goal=False, terrain='sand'):
         '''Display grid to debug
         
         Parameters
@@ -62,6 +62,8 @@ class Graph:
         '''        
         stroke(c)
         fill(255)
+        if terrain == 'sand':
+            fill(color(194, 178, 128))
         if is_goal:
             fill(c)
         rect(self.column * self.w, self.row * self.h, self.w, self.h)
