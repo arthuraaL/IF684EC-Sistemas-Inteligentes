@@ -28,7 +28,7 @@ class Graph:
         self.h = h
         self.f = f
         self.neighbors = []
-        # self.center = PVector(self.column, self.row)
+        self.center = PVector(self.column, self.row)
         self.wall = False 
         self.water = False
         self.sand = False

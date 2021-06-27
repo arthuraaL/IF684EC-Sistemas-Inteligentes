@@ -23,7 +23,7 @@ def setup():
     
     start = grid[0][0]
     start.wall = False
-    goal = grid[10][10]
+    goal = grid[int(random(0, cols-1))][int(random(0, rows-1))]
     goal.wall = False
     bfs = BFS(start, grid)
     agent = Agent(start.column, start.row)
@@ -31,17 +31,21 @@ def setup():
     
     make_vertical_walls(grid)
     make_horizontal_walls(grid)
+    make_vertical_walls(grid)
+    make_horizontal_walls(grid)
+    make_vertical_walls(grid)
+    make_horizontal_walls(grid)
     
 # draw == while not frontier.empty()
 def draw():
-    # delay(300)
+    delay(100)
     global rows, cols, grid, agent, bfs, k, h_wall, goal, start
     start.wall = False
     goal.wall = False
     came_from = dict()
     w = width / cols
     h = height / rows
-    
+        
     for i in range(rows):
         for j in range(cols):
             strokeWeight(1)
