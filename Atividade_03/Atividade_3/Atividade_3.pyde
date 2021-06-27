@@ -1,10 +1,12 @@
 from collections import deque
 from graph import Graph
-from utils import BFS, make_grid
+from utils import BFS, make_grid, make_horizontal_walls, make_vertical_walls
 from agent import Agent
 
+k = 0
+
 def setup():
-    global grid, cols, rows, agent, bfs
+    global grid, cols, rows, agent, bfs, goal, start
     size(400, 400)
     rows = 20
     cols = 20
@@ -20,19 +22,26 @@ def setup():
             grid[i][j].add_neighbors(grid)
     
     start = grid[0][0]
+    start.wall = False
+    goal = grid[10][10]
+    goal.wall = False
     bfs = BFS(start, grid)
     agent = Agent(start.column, start.row)
-    
-k = 0
 
+    
+    make_vertical_walls(grid)
+    make_horizontal_walls(grid)
+    
 # draw == while not frontier.empty()
 def draw():
-    delay(300)
-    global rows, cols, grid, agent, bfs, k
+    # delay(300)
+    global rows, cols, grid, agent, bfs, k, h_wall, goal, start
+    start.wall = False
+    goal.wall = False
     came_from = dict()
     w = width / cols
     h = height / rows
-    goal = grid[5][6]
+    
     for i in range(rows):
         for j in range(cols):
             strokeWeight(1)
@@ -47,6 +56,10 @@ def draw():
         if k < len(path):
             agent.update(x=path[k].column, y=path[k].row)
         else:
+            k = 0
+            bfs = BFS(start, grid)
+            # goal = grid[int(random(1, cols-1))][int(random(1, rows-1))]
+            # start = grid[int(random(1, cols-1))][int(random(1, rows-1))]
             print('DONE')
             noLoop()
     agent.display(w, h)

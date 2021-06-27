@@ -23,45 +23,14 @@ class BFS:
             current = self.frontier.popleft()
             
             if current == goal:
-                self.is_finish = True
-                # path = []
-                # temp = current
-                # path.append(temp)
-                # while (self.came_from[temp] != None):
-                #     path.append(self.came_from[temp])
-                #     temp = self.came_from[temp]
-                # current.path = path
-                # for i in path:
-                #     i.display(color(120,4,200), is_goal=True)      
+                self.is_finish = True   
                     
             for neighbor in current.neighbors:
-                if neighbor not in self.came_from:
+                if neighbor not in self.came_from and not neighbor.wall:
                     self.frontier.append(neighbor)
                     self.came_from[neighbor] = current
             
             return self.came_from
-                    
-    # def __call__(self, goal):
-    #     for i in self.came_from:
-    #         strokeWeight(1)
-    #         i.display(0)
-    
-    #     for i in self.frontier:
-    #         strokeWeight(2)
-    #         i.display(color(0,0,150))
-            
-    #     while len(self.frontier) > 0:
-    #         current = self.frontier.popleft()
-            
-    #         if current == goal:
-    #             break
-            
-    #         for neighbor in current.neighbors:
-    #             if neighbor not in self.came_from:
-    #                 self.frontier.append(neighbor)
-    #                 self.came_from[neighbor] = current
-        
-    #     return self.came_from
     
     def reconstruct_path(self, came_from, goal):
         current = goal
@@ -80,5 +49,18 @@ class BFS:
 def make_grid(rows, cols):
     ''' Returns a empty grid '''
     return [[0 for col in range(cols)] for row in range(rows)]
+
+def make_horizontal_walls(grid):
+    i_wall = int(random(10))
+    j_wall = int(random(10))
+    h_wall = [grid[j_wall][i_wall], grid[j_wall+1][i_wall], grid[j_wall+2][i_wall]]
+    for i in h_wall:
+        i.wall = True
     
+def make_vertical_walls(grid):
+    i_wall = int(random(10))
+    j_wall = int(random(10))
+    h_wall = [grid[j_wall][i_wall], grid[j_wall][i_wall+1], grid[j_wall][i_wall+2]]
+    for i in h_wall:
+        i.wall = True    
     
