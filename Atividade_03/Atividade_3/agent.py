@@ -9,14 +9,15 @@ class Agent:
         self.maxforce = 0.2
         
     # Method to update location
-    def update(self):
-        # Update velocity
-        self.velocity.add(self.acceleration)
-        # Limit speed
-        self.velocity.limit(self.maxspeed)
-        self.position.add(self.velocity)
-        # Reset acceleration to 0 each cycle
-        self.acceleration.mult(0)
+    def update(self, x, y):
+        # # Update velocity
+        # self.velocity.add(self.acceleration)
+        # # Limit speed
+        # self.velocity.limit(self.maxspeed)
+        # self.position.add(self.velocity)
+        # # Reset acceleration to 0 each cycle
+        # self.acceleration.mult(0)
+        self.position = PVector(x, y)
 
     def applyForce(self, force):
         # We could add mass here if we want A = F / M
