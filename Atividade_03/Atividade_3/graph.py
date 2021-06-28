@@ -13,7 +13,7 @@ class Graph:
     h: int
         Height of the cell
     f: float
-        Cost of the path -> f(n) = g(n) + h(n)
+        Cost of the cell
         
     Attributes
     ----------
@@ -41,7 +41,7 @@ class Graph:
         Parameters
         ----------
         nodes: Graph
-            The nodes is used to access the neighbors of each cell
+            The nodes are used to access the neighbors of each cell
         '''
         columns = 20 #temporario
         rows = 20
@@ -65,6 +65,10 @@ class Graph:
         '''        
         stroke(c)
         fill(color(194, 178, 128))
+        if self.sand:
+            fill(color(112, 84, 62))
+        if self.water:
+            fill(color(57, 163, 192))
         if self.wall:
             fill(0)
         if is_goal:
