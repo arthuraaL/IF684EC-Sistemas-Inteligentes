@@ -32,7 +32,17 @@ class Graph:
         self.wall = False 
         self.water = False
         self.sand = False
+        self.is_start = False
+        self.is_goal = False
         self.path = []
+        
+        if self.is_start or self.is_goal:
+            self.wall = False
+        
+    def reset(self):
+        self.wall = False
+        self.water = False
+        self.sand = False
         
     
     def add_neighbors(self, nodes):
@@ -54,7 +64,7 @@ class Graph:
         if self.row < rows - 1:
             self.neighbors.append(nodes[self.row + 1][self.column])
     
-    def display(self, c=0, is_goal=False, terrain='sand'):
+    def display(self, c=0, is_goal=False):
         '''Display grid to debug
         
         Parameters

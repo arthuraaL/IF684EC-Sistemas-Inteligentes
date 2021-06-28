@@ -1,15 +1,15 @@
 from graph import Graph
 class Agent:
-    def __init__(self, x, y):
+    def __init__(self, center):
         self.acceleration = PVector(0, 0)
         self.velocity = PVector(0, -1)
-        self.position = PVector(x, y)
+        self.position = center
         self.r = 10
         self.maxspeed = 4
         self.maxforce = 0.2
         
     # Method to update location
-    def update(self, x, y):
+    def update(self, new_center):
         # # Update velocity
         # self.velocity.add(self.acceleration)
         # # Limit speed
@@ -17,7 +17,7 @@ class Agent:
         # self.position.add(self.velocity)
         # # Reset acceleration to 0 each cycle
         # self.acceleration.mult(0)
-        self.position = PVector(x, y)
+        self.position = new_center
 
     def applyForce(self, force):
         # We could add mass here if we want A = F / M
