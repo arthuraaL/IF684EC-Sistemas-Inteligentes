@@ -7,7 +7,8 @@ from food import Food
 import argparse
 
 k = 0
-search_type = 'bfs'            #bfs, dfs, ucs, greedy, a_star
+search_type = 'a_star'            # bfs, dfs, ucs, greedy, a_star
+bricks = 7 # wall size
 
 def setup():
     global grid, cols, rows, agent, goal, start, food, search
@@ -29,19 +30,20 @@ def setup():
             grid[i][j].add_neighbors(grid)
 
     # setting start and goal
-    start = grid[0][0]
+    start = grid[int(random(0, cols-1))][int(random(0, rows-1))]
     start.is_start = True
+    start.wall = False
     goal = grid[int(random(0, cols-1))][int(random(0, rows-1))]
+    goal.wall = False
     goal.is_goal = True
-    food = Food(goal)
     
     # create an object
     search = Search(start, grid, search_type)
     # create the agent and a food
     agent = Agent(start.center)
-    
+    food = Food(goal)
     # obstacles, water, mud and sand
-    terrain_generator(grid)
+    terrain_generator(grid, bricks, cols, rows)
         
 # draw == while not frontier.empty()
 def draw():
@@ -68,13 +70,11 @@ def draw():
             # food counter
             food.count += 1
             print('Food Counter = ' + str(food.count))
-            first_loop = False
             start = goal
             start.wall = False
             goal = grid[int(random(1, cols-1))][int(random(1, rows-1))]
             while goal.wall:
                 goal = grid[int(random(1, cols-1))][int(random(1, rows-1))]
-            goal.wall = False
             # create an object
             search = Search(start, grid, search_type)
             # create the agent and a food
