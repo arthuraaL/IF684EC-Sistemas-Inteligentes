@@ -7,6 +7,7 @@ from food import Food
 import argparse
 
 k = 0
+search_type = 'bfs'            #bfs, dfs, ucs, greedy, a_star
 
 def setup():
     global grid, cols, rows, agent, goal, start, food, search
@@ -35,16 +36,16 @@ def setup():
     food = Food(goal)
     
     # create an object
-    search = Search(start, grid, 'a_star')
+    search = Search(start, grid, search_type)
     # create the agent and a food
     agent = Agent(start.center)
     
-    # obstacles, water, and sand
+    # obstacles, water, mud and sand
     terrain_generator(grid)
         
 # draw == while not frontier.empty()
 def draw():
-    delay(20)
+    delay(50)
     global rows, cols, grid, agent, k, goal, start, food, search
     w = width / cols
     h = height / rows
@@ -75,7 +76,7 @@ def draw():
                 goal = grid[int(random(1, cols-1))][int(random(1, rows-1))]
             goal.wall = False
             # create an object
-            search = Search(start, grid, 'a_star')
+            search = Search(start, grid, search_type)
             # create the agent and a food
             agent = Agent(start.center)    
             # update the food position
