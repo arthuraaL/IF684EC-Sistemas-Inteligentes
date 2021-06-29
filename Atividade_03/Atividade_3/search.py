@@ -16,17 +16,16 @@ class Search:
         self.came_from[self._start] = None
         self.cost_so_far[self._start] = 0
         
-        if self.algorithm == 'bfs' or 'dfs':
+        if self.algorithm == 'bfs' or self.algorithm == 'dfs':
             self.frontier = deque()
             self.frontier.append(self._start)       
-        if self.algorithm == 'ucs' or 'greedy' or 'a_star':
+        elif self.algorithm == 'ucs' or self.algorithm == 'greedy' or self.algorithm == 'a_star':
             self.frontier = pqueue()
             self.frontier.insert((self._start.f, self._start))
 
             
     def __call__(self, goal):
         if self.algorithm == 'bfs':
-            print('oi')
             for i in self.came_from:
                 strokeWeight(2)
                 i.display(color(150,0,0))
@@ -156,4 +155,4 @@ class Search:
         for i in path:
             i.display(color(120,4,200), is_goal=True)
         
-        return path        
+        return path
