@@ -31,6 +31,7 @@ class Graph:
         self.center = PVector(self.column, self.row)
         self.wall = False 
         self.water = False
+        self.mud = False
         self.sand = False
         self.is_start = False
         self.is_goal = False
@@ -74,13 +75,15 @@ class Graph:
             If is in the goal, it should color the path
         '''        
         stroke(c)
-        fill(color(194, 178, 128))
+        fill(color(96, 128, 56))
         if self.sand:
+            fill(color(194, 178, 128))
+        if self.mud:
             fill(color(112, 84, 62))
         if self.water:
             fill(color(57, 163, 192))
         if self.wall:
-            fill(0)
+            fill(color(51, 51, 51))
         if is_goal:
             fill(c)
         rect(self.column * self.w, self.row * self.h, self.w, self.h)

@@ -28,29 +28,48 @@ def make_vertical_walls(grid):
 
 def make_sand(grid):
     orientation = int(random(2))
-    spread_point_x = int(random(13))
-    spread_point_y = int(random(13))
+    spread_point_x = int(random(17))
+    spread_point_y = int(random(17))
     if orientation == 0: #Horizontal Sand Rectangle
-        for i in range(7):
-            for j in range(4):
+        for i in range(3):
+            for j in range(2):
                 if not grid[spread_point_x + i][spread_point_y + j].wall:
                     grid[spread_point_x + i][spread_point_y + j].sand = True
-                    grid[spread_point_x + i][spread_point_y + j].f = 5
+                    grid[spread_point_x + i][spread_point_y + j].f = 1
                     grid[spread_point_x + i][spread_point_y + j]
     else: #Vertical Sand Rectangle
+        for i in range(2):
+            for j in range(3):
+                if not grid[spread_point_x + i][spread_point_y + j].wall:
+                    grid[spread_point_x + i][spread_point_y + j].sand = True
+                    grid[spread_point_x + i][spread_point_y + j].f = 1
+                    grid[spread_point_x + i][spread_point_y + j]
+
+def make_mud(grid):
+    orientation = int(random(2))
+    spread_point_x = int(random(13))
+    spread_point_y = int(random(13))
+    if orientation == 0: #Horizontal Mud Rectangle
+        for i in range(7):
+            for j in range(4):
+                if not grid[spread_point_x + i][spread_point_y + j].wall and not grid[spread_point_x + i][spread_point_y + j].sand:
+                    grid[spread_point_x + i][spread_point_y + j].mud = True
+                    grid[spread_point_x + i][spread_point_y + j].f = 5
+                    grid[spread_point_x + i][spread_point_y + j]
+    else: #Vertical Mud Rectangle
         for i in range(4):
             for j in range(7):
                 if not grid[spread_point_x + i][spread_point_y + j].wall:
-                    grid[spread_point_x + i][spread_point_y + j].sand = True
+                    grid[spread_point_x + i][spread_point_y + j].mud = True
                     grid[spread_point_x + i][spread_point_y + j].f = 5
                     grid[spread_point_x + i][spread_point_y + j]
-
+                    
 def make_water(grid):
     spread_point_x = int(random(15))
     spread_point_y = int(random(15))
     for i in range(5):
         for j in range(5):
-            if not grid[spread_point_x + i][spread_point_y + j].wall and not grid[spread_point_x + i][spread_point_y + j].sand:
+            if not grid[spread_point_x + i][spread_point_y + j].wall and not grid[spread_point_x + i][spread_point_y + j].sand and not grid[spread_point_x + i][spread_point_y + j].mud:
                 grid[spread_point_x + i][spread_point_y + j].water = True
                 grid[spread_point_x + i][spread_point_y + j].f = 10 
                 grid[spread_point_x + i][spread_point_y + j]
@@ -66,4 +85,6 @@ def terrain_generator(grid):
     make_horizontal_walls(grid)
     
     make_sand(grid)
+    make_sand(grid)
+    make_mud(grid)
     make_water(grid)

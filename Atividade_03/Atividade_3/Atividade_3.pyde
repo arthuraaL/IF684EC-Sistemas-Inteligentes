@@ -1,15 +1,15 @@
 from collections import deque
 from graph import Graph
 from utils import heuristic, make_grid, terrain_generator
-from search import BFS, UCS, Greedy, A_star, DFS
+from search import Search
 from agent import Agent
 from food import Food
+import argparse
 
 k = 0
-first_loop = True
 
 def setup():
-    global grid, cols, rows, agent, a_star, goal, start, food, bfs, a_star, ucs, greedy, dfs, first_loop
+    global grid, cols, rows, agent, goal, start, food, search
     # settings
     size(400, 400)
     rows = 20
@@ -26,10 +26,6 @@ def setup():
     for i in range(rows):
         for j in range(cols):
             grid[i][j].add_neighbors(grid)
-    
-    
-        
-
 
     # setting start and goal
     start = grid[0][0]
@@ -39,9 +35,7 @@ def setup():
     food = Food(goal)
     
     # create an object
-    # a_star = A_star(start, grid)
-    dfs = DFS(start, grid)
-
+    search = Search(start, grid, 'a_star')
     # create the agent and a food
     agent = Agent(start.center)
     
@@ -50,9 +44,8 @@ def setup():
         
 # draw == while not frontier.empty()
 def draw():
-    delay(100)
-    global rows, cols, grid, agent, k, goal, start, food, bfs, a_star, ucs, greedy, dfs, first_loop
-    came_from = dict()
+    delay(20)
+    global rows, cols, grid, agent, k, goal, start, food, search
     w = width / cols
     h = height / rows
         
@@ -62,10 +55,10 @@ def draw():
             grid[i][j].display(0)        
  
 
-    if dfs.is_finished is False:
-        came_from = dfs(food.position) 
+    if search.is_finished is False:
+        search(food.position) 
     else:
-        path = dfs.reconstruct_path(came_from, food.position)
+        path = search.reconstruct_path(food.position)
         k += 1
         if k < len(path):
             agent.update(path[k].center)
@@ -78,13 +71,16 @@ def draw():
             start = goal
             start.wall = False
             goal = grid[int(random(1, cols-1))][int(random(1, rows-1))]
+            while goal.wall:
+                goal = grid[int(random(1, cols-1))][int(random(1, rows-1))]
             goal.wall = False
             # create an object
-            dfs = DFS(start, grid)
+            search = Search(start, grid, 'a_star')
             # create the agent and a food
             agent = Agent(start.center)    
             # update the food position
             food.update(goal)
             redraw()
+            
     agent.display(w, h)
     food.display(w, h)
